@@ -1,0 +1,6 @@
+•Requirements
+•Usecases
+•State charts, sequencecharts
+•Implementation
+•Github
+•Everyone will write a report of his/her project that will bea chapter of the final report
