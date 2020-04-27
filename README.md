@@ -14,7 +14,7 @@ A network important services in the city.
 
 • Receive requests and answer(acceptorreject) 
 
-- If you enter the hospital a sytem connects to the app and find out the informations about the patient.
+- If you enter the hospital a system connects to the app and find out the informations about the patient.
 
 
 
