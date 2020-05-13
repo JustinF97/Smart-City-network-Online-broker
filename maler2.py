@@ -24,7 +24,7 @@ client.connect("test.mosquitto.org", 1883, 60)
 
 data = {
     "name": "Maler 2", 
-    "farben_list" :["Rot", "DRot"], 
+    "farben_list" :["Rot", "Drot"], 
     "topic": "hshl/maler/maler2"
     }
 client.publish("hshl/server/maler", json.dumps(data))
