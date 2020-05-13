@@ -23,11 +23,10 @@ client.connect("test.mosquitto.org", 1883, 60)
 client.loop_start()
 
 
-def request_farbe(farbe, quantity):
+def request_farbe(farbe):
     data = {
         "name": "Charles",
         "farbe": farbe,
-        "quantity": quantity,
         "topic": "hshl/customer/myid",
     }
     client.publish("hshl/server/order", json.dumps(data))
@@ -35,7 +34,6 @@ def request_farbe(farbe, quantity):
 while True:
     if ask:
         farbe = input("Enter a Farbe name: ")
-        quantity = input("Welche Farbe "+farbe+" boentigst du? ")
-        request_farbe(farbe, quantity)
+        request_farbe(farbe)
         ask = False
 
