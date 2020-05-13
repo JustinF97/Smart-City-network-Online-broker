@@ -15,6 +15,7 @@ def on_connect(client, userdata, flags, rc):
                     ("hshl/server/order", 2), 
                     ("hshl/server/maler", 2),
                     ])
+    
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     if(msg.topic.endswith('maler')):
@@ -29,13 +30,13 @@ def process_order(data):
     quantity = js['quantity']
     topic = js['topic']
     
- selected_maler = None
+    selected_maler = None
 
     for maler in companies:
         if farbe in maler.farbe_list:
             selected_maler = maler
             
- response = ''
+    response = ''
     if selected_maler != None:
         response = 'Der Maler '+selected_maler.name+ ' hat deine Farbe vorhanden'
         client.publish(selected_maler.topic, name+ ' wants '+quantity+ ' farbe '+farbe)
@@ -55,7 +56,7 @@ def register_maler(data):
         print('--------------')
     print('#####################')
     
-    client = mqtt.Client()
+client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
