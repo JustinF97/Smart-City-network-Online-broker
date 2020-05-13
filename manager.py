@@ -27,7 +27,6 @@ def process_order(data):
     js = json.loads(data)
     name = js['name']
     farbe = js['farbe']
-    quantity = js['quantity']
     topic = js['topic']
     
     selected_maler = None
@@ -39,7 +38,7 @@ def process_order(data):
     response = ''
     if selected_maler != None:
         response = 'Der Maler '+selected_maler.name+ ' hat deine Farbe vorhanden'
-        client.publish(selected_maler.topic, name+ ' wants '+quantity+ ' farbe '+farbe)
+        client.publish(selected_maler.topic, name+ ' wants '+farbe+ ' farbe '+farbe)
     else:
         response = 'Sorry, nobody has this kind of Farbe'
     
