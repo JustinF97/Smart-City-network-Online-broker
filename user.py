@@ -35,7 +35,7 @@ def request_farbe(farbe, quantity):
     while True:
     if ask:
         farbe = input("Enter a Farbe name: ")
-        quantity = input("Welche Farbe "+farbe+" bötigst du? ")
-        request_pizza(farbe, quantity)
+        quantity = input("Welche Farbe "+farbe+" boentigst du? ")
+        request_farbe(farbe, quantity)
         ask = False
 
