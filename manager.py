@@ -4,7 +4,7 @@ import json
 class Maler:
     def __init__(self, name, maler_list, topic):
         self.name = name
-        self.pizza_list = maler_list
+        self.maler_list = maler_list
         self.topic = topic
 
 companies = []
