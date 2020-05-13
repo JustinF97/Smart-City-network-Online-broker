@@ -34,4 +34,9 @@ def process_order(data):
     for krankenhaus in m_krankenhaus
      if adresse in krankenhaus.ort:
         selected_krankenhaus = krankenhaus
+	
+response = ''
+if seleted_krankenhaus != None:
+	response = 'The krankenhaus '+selected_krankenhaus.ort+ 'ist kein Platz frei'
+	client.publish(selected_krankenhaus.topic, name+ ' wants '+
     
