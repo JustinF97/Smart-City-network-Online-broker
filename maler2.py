@@ -10,7 +10,7 @@ companies = []
 
 def on_connect(client, userdata, flags, rc):
     client.subscribe([                    
-                    ("hshl/maler/maler1", 2),
+                    ("hshl/maler/maler2", 2),
                     ])
 
 def on_message(client, userdata, msg):
@@ -23,9 +23,9 @@ client.on_message = on_message
 client.connect("test.mosquitto.org", 1883, 60)
 
 data = {
-    "name": "Maler 1", 
-    "farben_list" :["Blau", "DBlau"], 
-    "topic": "hshl/maler/maler1"
+    "name": "Maler 2", 
+    "farben_list" :["Rot", "DROt"], 
+    "topic": "hshl/maler/maler2"
     }
 client.publish("hshl/server/maler", json.dumps(data))
 
