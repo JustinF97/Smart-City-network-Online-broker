@@ -33,9 +33,9 @@ def request_farbe(farbe, quantity):
     client.publish("hshl/server/order", json.dumps(data))
     
     while True:
-    if ask:
-        farbe = input("Enter a Farbe name: ")
-        quantity = input("Welche Farbe "+farbe+" boentigst du? ")
-        request_farbe(farbe, quantity)
-        ask = False
+        if ask:
+            farbe = input("Enter a Farbe name: ")
+            quantity = input("Welche Farbe "+farbe+" boentigst du? ")
+            request_farbe(farbe, quantity)
+            ask = False
 
