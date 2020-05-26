@@ -5,6 +5,7 @@ class Krankenhaus:
   def _init_(self, name, gps, topic):
     self.name = name
     self.gps = gps
+    self.topic = topic
    
 mKrankenhaus = []
 
