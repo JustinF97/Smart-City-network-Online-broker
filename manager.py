@@ -41,7 +41,7 @@ def process_order(data):
         response = 'Das Krankenhaus '+selected_krankenhaus.name+ ' hat einen Platz frei'
         client.publish(selected_krankenhaus.gps, name+ ' benötigt einen Platz ')
     else:
-        response = 'Leider haben wir'+gps+'keinen platz'
+        response = 'Leider haben wir keinen platz'
     
     client.publish(topic,gps,response)
 
