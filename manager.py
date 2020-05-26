@@ -45,12 +45,12 @@ def process_order(data):
 
 def register_krankenhaus(data):
     js = json.loads(data)
-    maler = maler(js['name'], js['gps'])
+    maler = maler(js['name'], js['gps']js['notfall'])
     companies.append(krankenhaus)
     print('#####################')
-    for c in maler:
+    for c in krankenhaus:
         print(c.name)
-        print(c.maler_list)
+        print(c.gps)
         print('--------------')
     print('#####################')
     
