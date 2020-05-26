@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import json
 
 class Krankenhaus:
-  def _init_(self, name, gps):
+  def _init_(self, name, gps, topic):
     self.name = name
     self.gps = gps
    
@@ -27,6 +27,7 @@ def process_order(data):
     name = js['name']
     gps = js['gps']
     notfall = js['notfall']
+    topic = js['topic']
     
     selected_krankenhaus = None
 
@@ -41,11 +42,11 @@ def process_order(data):
     else:
         response = 'Leider haben wir'+gps+'keinen platz'
     
-    client.publish(gps, response)
+    client.publish(topic,gps,response)
 
 def register_krankenhaus(data):
     js = json.loads(data)
-    maler = maler(js['name'], js['gps']js['notfall'])
+    maler = maler(js['name'], js['gps']js['notfall'],js['topic'])
     companies.append(krankenhaus)
     print('#####################')
     for c in krankenhaus:
