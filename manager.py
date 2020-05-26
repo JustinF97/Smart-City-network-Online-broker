@@ -1,24 +1,23 @@
 import paho.mqtt.client as mqtt
 import json
 
-class Maler:
-    def __init__(self, name, maler_list, topic):
-        self.name = name
-        self.maler_list = maler_list
-        self.topic = topic
-
-companies = []
+class Krankenhaus:
+  def _init_(self, name, gps):
+    self.name = name
+    self.gps = gps
+   
+mKrankenhaus = []
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe([
                     ("hshl/server/order", 2), 
-                    ("hshl/server/maler", 2),
+                    ("hshl/server/krankenhaus", 2),
                     ])
     
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
-    if(msg.topic.endswith('maler')):
+    if(msg.topic.endswith('krankenhaus')):
         register_maler(msg.payload)
     if(msg.topic.endswith('order')):
         process_order(msg.payload)
@@ -26,28 +25,28 @@ def on_message(client, userdata, msg):
 def process_order(data):
     js = json.loads(data)
     name = js['name']
-    farbe = js['farbe']
-    topic = js['topic']
+    gps = js['gps']
+    notfall = js['notfall']
     
-    selected_maler = None
+    selected_krankenhaus = None
 
-    for maler in companies:
-        if farbe in maler.farbe_list:
-            selected_maler = maler
+    for krankenhaus in mkrankenhaus:
+        if gps in krankenhaus.gps:
+            selected_krankenhaus = krankenhaus
             
     response = ''
-    if selected_maler != None:
-        response = 'Der Maler '+selected_maler.name+ ' hat deine Farbe vorhanden'
-        client.publish(selected_maler.topic, name+ ' wants '+farbe+ ' farbe '+farbe)
+    if selected_krankenhaus != None:
+        response = 'Das Krankenhaus '+selected_krankenhaus.name+ ' hat einen Platz frei'
+        client.publish(selected_krankenhaus.gps, name+ ' benötigt einen Platz ')
     else:
-        response = 'Sorry, nobody has this kind of Farbe'
+        response = 'Leider haben wir'+gps+'keinen platz'
     
-    client.publish(topic, response)
+    client.publish(gps, response)
 
-def register_maler(data):
+def register_krankenhaus(data):
     js = json.loads(data)
-    maler = maler(js['name'], js['maler_list'], js['topic'])
-    companies.append(maler)
+    maler = maler(js['name'], js['gps'])
+    companies.append(krankenhaus)
     print('#####################')
     for c in maler:
         print(c.name)
