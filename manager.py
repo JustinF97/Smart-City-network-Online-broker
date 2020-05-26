@@ -1,65 +1,50 @@
 import paho.mqtt.client as mqtt
 import json
 
-class Krankenhaus:
-  def _init_(self, name, gps, topic):
-    self.name = name
-    self.gps = gps
-    self.topic = topic
-   
-mKrankenhaus = []
+class Company:
+    def __init__(self, name, gps_list, topic):
+        self.name = name
+        self.gps_list = gps_list
+        self.topic = topic
+ 
+companies = []
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-    client.subscribe([
-                    ("hshl/server/order", 2), 
-                    ("hshl/server/krankenhaus", 2),
-                    ])
-    
+  print("Connected with result code "+str(rc))
+  client.subscribe([
+                  ("hshl/server/order", 2),
+                  ("hshl/server/company", 2),
+                  ])
+  
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
-    if(msg.topic.endswith('krankenhaus')):
-        register_maler(msg.payload)
+    if(msg.topic.endswith('company')):
+        register_company(msg.payload)
     if(msg.topic.endswith('order')):
         process_order(msg.payload)
-        
+
 def process_order(data):
     js = json.loads(data)
     name = js['name']
-    gps = js['gps']
+    pizza = js['adresse']
     notfall = js['notfall']
     topic = js['topic']
-    
-    selected_krankenhaus = None
+  
+    selected_company = None
 
-    for krankenhaus in mkrankenhaus:
-        if gps in krankenhaus.gps:
-            selected_krankenhaus = krankenhaus
-            
+    for company in companies:
+        if pizza in company.gps_list:
+            selected_company = company
+           
     response = ''
-    if selected_krankenhaus != None:
-        response = 'Das Krankenhaus '+selected_krankenhaus.name+ ' hat einen Platz frei'
-        client.publish(selected_krankenhaus.gps, name+ ' benötigt einen Platz ')
+    if selected_company != None:
+        response = 'The company '+selected_company.name+ ' hat noch einen Platz frei'
+        client.publish(selected_company.topic, name+ ' wants '+notfall+ ' Paltz '+gps)
     else:
-        response = 'Leider haben wir keinen platz'
+        response = 'Sorry, keiner hat einen Platz'
     
-    client.publish(topic,gps,response)
-
-def register_krankenhaus(data):
-    js = json.loads(data)
-    maler = maler(js['name'], js['gps']js['notfall'],js['topic'])
-    companies.append(krankenhaus)
-    print('#####################')
-    for c in krankenhaus:
-        print(c.name)
-        print(c.gps)
-        print('--------------')
-    print('#####################')
+    client.publish(topic, response)
     
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-
-client.connect("test.mosquitto.org", 1883, 60)
-
-client.loop_forever()
+    
+    
+    
